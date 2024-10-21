@@ -1,7 +1,10 @@
 import argparse as ap
 import os
+from os.path import abspath, dirname, join
 
 from huggingface_hub import hf_hub_download
+
+DEFAULT_DIR = join(dirname(abspath(__file__)), 'data')
 
 
 def parse_args():
@@ -10,7 +13,7 @@ def parse_args():
     parser.add_argument('--repo', type=str, required=True, help='Repo name')
     parser.add_argument('--filename', type=str, required=True,
                         help='Filename to download')
-    parser.add_argument('--dir', type=str, required=True,
+    parser.add_argument('--dir', type=str, required=False, default=DEFAULT_DIR,
                         help='Directory name (will be created if not exists)')
 
     return parser.parse_args()
