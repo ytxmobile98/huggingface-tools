@@ -10,11 +10,12 @@ DEFAULT_DIR = join(dirname(abspath(__file__)), 'data')
 def parse_args():
     parser = ap.ArgumentParser()
 
-    parser.add_argument('--repo', type=str, required=True, help='Repo name')
+    parser.add_argument('--repo', type=str, required=True, help='repo name')
     parser.add_argument('--filename', type=str, required=False,
-                        help='Filename to download. If not specified, download the entire repo.')
+                        help='filename to download;'
+                        ' if not specified, download the entire repo')
     parser.add_argument('--dir', type=str, required=False, default=DEFAULT_DIR,
-                        help='Directory name (will be created if not exists)')
+                        help='directory name (will be created if not exists)')
 
     return parser.parse_args()
 
