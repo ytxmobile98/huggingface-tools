@@ -1,4 +1,4 @@
-import argparse as ap
+from argparse import ArgumentParser
 import os
 from os.path import abspath, dirname, join
 
@@ -8,7 +8,7 @@ DEFAULT_DIR = join(dirname(abspath(__file__)), 'data')
 
 
 def parse_args():
-    parser = ap.ArgumentParser()
+    parser = ArgumentParser()
 
     parser.add_argument('--repo', type=str, required=True, help='repo name')
     parser.add_argument('--filename', type=str, required=False,
