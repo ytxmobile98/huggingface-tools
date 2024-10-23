@@ -2,7 +2,7 @@ import argparse as ap
 import os
 from os.path import abspath, dirname, join
 
-from huggingface_hub import hf_hub_download
+from huggingface_hub import hf_hub_download, snapshot_download
 
 DEFAULT_DIR = join(dirname(abspath(__file__)), 'data')
 
@@ -11,8 +11,8 @@ def parse_args():
     parser = ap.ArgumentParser()
 
     parser.add_argument('--repo', type=str, required=True, help='Repo name')
-    parser.add_argument('--filename', type=str, required=True,
-                        help='Filename to download')
+    parser.add_argument('--filename', type=str, required=False,
+                        help='Filename to download. If not specified, download the entire repo.')
     parser.add_argument('--dir', type=str, required=False, default=DEFAULT_DIR,
                         help='Directory name (will be created if not exists)')
 
@@ -21,9 +21,16 @@ def parse_args():
 
 def main():
     args = parse_args()
+
     os.makedirs(args.dir, exist_ok=True)
-    hf_hub_download(repo_id=args.repo, filename=args.filename,
-                    repo_type='dataset', local_dir=args.dir)
+
+    download_single_file = bool(args.filename)
+    if download_single_file:
+        hf_hub_download(repo_id=args.repo, filename=args.filename,
+                        repo_type='dataset', local_dir=args.dir)
+    else:
+        snapshot_download(repo_id=args.repo, repo_type='dataset',
+                          local_dir=args.dir)
 
 
 if __name__ == '__main__':
